@@ -1,10 +1,11 @@
 function getArrayParams(...arr) {
-  let min = Math.min(...arr);
-  let max = Math.max(...arr);
-  let sum = arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  let avg = +(sum / arr.length).toFixed(2);
+  // let min = Math.min(...arr);
+  // let max = Math.max(...arr);
+  // let sum = arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // let avg = +(sum / arr.length).toFixed(2);
 
-  return { min: min, max: max, avg: avg };
+  return { min: Math.min(...arr), max: Math.max(...arr), 
+    avg: +(arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0) / arr.length).toFixed(2) };
 }
 
 function summElementsWorker(...arr) {
