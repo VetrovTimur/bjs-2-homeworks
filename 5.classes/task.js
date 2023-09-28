@@ -20,7 +20,6 @@ class PrintEditionItem {
     }
 }
 
-//Почему Magazine, а не Shop??? :) хехе...
 class Magazine extends PrintEditionItem {
     constructor(name, releaseDate, pagesCount) {
         super(name, releaseDate, pagesCount,);
@@ -29,34 +28,31 @@ class Magazine extends PrintEditionItem {
 }
 
 class Book extends PrintEditionItem {
-    constructor(author, name, releaseDate, pagesCount, ) {
-        super(name, releaseDate, pagesCount,);
-        this.type = 'book';
+    constructor(author, type, releaseDate, pagesCount) {
+        super(type, releaseDate, pagesCount);
         this.author = author;
+        this.type = "book";
     }
 }
 
-// Не стал отделять их друг от друга строкой, так как посчитал, что 3 класса "копии" друг друга и у них одинаковый функционал, который завязан на родители.
-// Можно так делать или это считается дурным тоном?
 class NovelBook extends Book {
-    constructor(author, name, releaseDate, pagesCount ) {
-        super(name, releaseDate, pagesCount,);
-        this.type = 'novel';
-        this.author = author;
+    constructor(author, type, releaseDate, pagesCount) {
+        super(author, type, releaseDate, pagesCount);
+        this.type = "novel";
     }
 }
-class FantasticBook  extends Book {
-    constructor(author, name, releaseDate, pagesCount) {
-        super(name, releaseDate, pagesCount,);
-        this.type = 'fantastic';
-        this.author = author;
+
+class FantasticBook extends Book {
+    constructor(author, type, releaseDate, pagesCount) {
+        super(author, type, releaseDate, pagesCount);
+        this.type = "fantastic";
     }
 }
-class DetectiveBook  extends Book {
-    constructor(author, name, releaseDate, pagesCount ) {
-        super(name, releaseDate, pagesCount,);
-        this.type = 'detective';
-        this.author = author;
+
+class DetectiveBook extends Book {
+    constructor(author, type, releaseDate, pagesCount) {
+        super(author, type, releaseDate, pagesCount);
+        this.type = "detective";
     }
 }
 
@@ -73,30 +69,80 @@ class Library {
     }
 
     findBookBy(type, value) {
-        return typeof this.books.find(book => book[type] === value) === 'object' ? this.books.find(book => book[type] === value) : null
+        // return typeof this.books.find(book => book[type] === value) === 'object' ? this.books.find(book => book[type] === value) : null
+        const findResult = this.books.find((item) => item[type] === value);
+        return findResult || null;
     }
 
     giveBookByName(bookName){
-        let giveBoook = this.books.find(book => book.name === bookName);
-        if (typeof giveBoook === 'object') {
-            let index = this.books.indexOf(giveBoook);
-            this.books.splice(index, 1);
-            return giveBoook;
-        }
-        else {
-            return null;
-        }
+        // let giveBoook = this.books.find(book => book.name === bookName);
+        // if (typeof giveBoook === 'object') {
+        //     let index = this.books.indexOf(giveBoook);
+        //     this.books.splice(index, 1);
+        //     return giveBoook;
+        // }
+        // else {
+        //     return null;
+        // }
+        const book = this.findBookBy("name", bookName);
+        if (!book) return null;
+        this.books = this.books.filter((item) => item.name !== bookName);
+        return book;
     }
 }
 
-////////////////////////////////////////
 class Student {
     constructor(name) {
         this.name = name;
         this.journal = {};
     }
 
-    addMark() {
-        
+    setSubject(subjectName) {
+        if (this.journal.hasOwnProperty(subjectName) === true) {
+            return console.log('Предмет уже существует.');
+        }
+        else {
+            this.journal[subjectName] = [];
+        }
+    }
+    
+    addMark(mark, subjectName) {
+        if (this.journal.hasOwnProperty(subjectName) !== true) {
+            this.journal[subjectName] = [];
+            console.log('Несуществующий предмет. Предмет создан.');
+        }
+        if ((typeof mark === 'number') && (mark >= 1) && (mark <= 5)) {
+            this.journal[subjectName].push(mark);
+        }
+        else {
+            return console.log('Ошибка, оценка должна быть числом от 1 до 5');
+        }
+    }
+
+    getAverageBySubject(subjectName) {
+        if (this.journal.hasOwnProperty(subjectName) === true) {
+            let sum = 0;
+            let marks = this.journal[subjectName];
+            marks.forEach((item) => sum += item);
+            let averageBySubject = sum / marks.length;
+            return averageBySubject;
+        } else {
+            return console.log('Несуществующий предмет.');
+        }
+    }
+
+    getAverage() {
+        let sum = 0;
+        let marks = Object.values(this.journal);
+        let resultMarks = [];
+        marks.forEach((item) => resultMarks = [].concat(resultMarks, item));
+        resultMarks.forEach((item) => sum += item);
+        let average = sum / resultMarks.length;
+        return average;
+    }
+
+    exclude(reason) {
+        delete this.journal;
+        this.excluded = reason;
     }
 }
