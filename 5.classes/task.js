@@ -75,15 +75,6 @@ class Library {
     }
 
     giveBookByName(bookName){
-        // let giveBoook = this.books.find(book => book.name === bookName);
-        // if (typeof giveBoook === 'object') {
-        //     let index = this.books.indexOf(giveBoook);
-        //     this.books.splice(index, 1);
-        //     return giveBoook;
-        // }
-        // else {
-        //     return null;
-        // }
         const book = this.findBookBy("name", bookName);
         if (!book) return null;
         this.books = this.books.filter((item) => item.name !== bookName);
@@ -94,55 +85,78 @@ class Library {
 class Student {
     constructor(name) {
         this.name = name;
-        this.journal = {};
+        this.marks = {};
     }
 
-    setSubject(subjectName) {
-        if (this.journal.hasOwnProperty(subjectName) === true) {
-            return console.log('Предмет уже существует.');
-        }
-        else {
-            this.journal[subjectName] = [];
-        }
-    }
+    // setSubject(subjectName) {
+    //     return this.marks.hasOwnProperty(subjectName) === true ? console.log('Предмет уже существует.') : this.marks[subjectName] = [];
+    // }
     
-    addMark(mark, subjectName) {
-        if (this.journal.hasOwnProperty(subjectName) !== true) {
-            this.journal[subjectName] = [];
-            console.log('Несуществующий предмет. Предмет создан.');
-        }
-        if ((typeof mark === 'number') && (mark >= 1) && (mark <= 5)) {
-            this.journal[subjectName].push(mark);
-        }
-        else {
-            return console.log('Ошибка, оценка должна быть числом от 1 до 5');
-        }
-    }
+    // addMark(mark, subjectName) {
+    //     if (typeof mark === 'number' && mark >= 1 && mark <= 5) {
+    //         return this.marks[subjectName].push(mark);
+    //     }
+    //     return typeof mark === 'number' && mark >= 1 && mark <= 5 ? this.marks[subjectName].push(mark) : this.marks[subjectName] = [];
+    // }
+
+    // addMark(mark, subjectName) {
+    //     if (this.journal.hasOwnProperty(subjectName) !== true) {
+    //         this.journal[subjectName] = [];
+    //         console.log('Несуществующий предмет. Предмет создан.');
+    //     }
+    //     if ((typeof mark === 'number') && (mark >= 1) && (mark <= 5)) {
+    //         this.journal[subjectName].push(mark);
+    //     }
+    //     else {
+    //         return console.log('Ошибка, оценка должна быть числом от 1 до 5');
+    //     }
+    // }
+
+    // addMark(mark, subjectName) {
+    //     this.marks[subjectName].push(mark)
+
+    // }
+
+
+
+
+
+
 
     getAverageBySubject(subjectName) {
-        if (this.journal.hasOwnProperty(subjectName) === true) {
-            let sum = 0;
-            let marks = this.journal[subjectName];
-            marks.forEach((item) => sum += item);
-            let averageBySubject = sum / marks.length;
-            return averageBySubject;
-        } else {
-            return console.log('Несуществующий предмет.');
+        if(this.marks.hasOwnProperty(subjectName) === false || this.marks.length === 0) { 
+            return 0;
         }
+        return this.marks[subjectName].reduce((average, mark, index, array) => average + mark / array.length)
     }
 
     getAverage() {
-        let sum = 0;
-        let marks = Object.values(this.journal);
-        let resultMarks = [];
-        marks.forEach((item) => resultMarks = [].concat(resultMarks, item));
-        resultMarks.forEach((item) => sum += item);
-        let average = sum / resultMarks.length;
-        return average;
+        if (Object.values(this.marks).length === 0) {
+            return 0;
+        }
+
+        return Object.values(this.marks).reduce((accumulator, currentValue) => accumulator + currentValue / Object.values(this.marks).length, 0)
     }
 
     exclude(reason) {
-        delete this.journal;
+        delete this.marks;
         this.excluded = reason;
     }
 }
+const student = new Student("Олег Никифоров");
+
+// console.log(student);
+// student.addMark(5, "химия");
+// student.addMark(4, "химия");
+// student.addMark(3, "химия");
+// console.log(student);
+arr = 1;
+const test = {
+    name: []
+}
+test.name.push(arr)
+console.log(test);
+
+
+
+
