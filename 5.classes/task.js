@@ -93,9 +93,9 @@ class Student {
     // }
     
     // addMark(mark, subjectName) {
-    //     if (typeof mark === 'number' && mark >= 1 && mark <= 5) {
-    //         return this.marks[subjectName].push(mark);
-    //     }
+    //     // if (typeof mark === 'number' && mark >= 1 && mark <= 5) {
+    //     //     return this.marks[subjectName].push(mark);
+    //     //}
     //     return typeof mark === 'number' && mark >= 1 && mark <= 5 ? this.marks[subjectName].push(mark) : this.marks[subjectName] = [];
     // }
 
