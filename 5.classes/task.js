@@ -88,54 +88,33 @@ class Student {
         this.marks = {};
     }
 
-    // setSubject(subjectName) {
-    //     return this.marks.hasOwnProperty(subjectName) === true ? console.log('Предмет уже существует.') : this.marks[subjectName] = [];
-    // }
-    
-    // addMark(mark, subjectName) {
-    //     // if (typeof mark === 'number' && mark >= 1 && mark <= 5) {
-    //     //     return this.marks[subjectName].push(mark);
-    //     //}
-    //     return typeof mark === 'number' && mark >= 1 && mark <= 5 ? this.marks[subjectName].push(mark) : this.marks[subjectName] = [];
-    // }
-
-    // addMark(mark, subjectName) {
-    //     if (this.journal.hasOwnProperty(subjectName) !== true) {
-    //         this.journal[subjectName] = [];
-    //         console.log('Несуществующий предмет. Предмет создан.');
-    //     }
-    //     if ((typeof mark === 'number') && (mark >= 1) && (mark <= 5)) {
-    //         this.journal[subjectName].push(mark);
-    //     }
-    //     else {
-    //         return console.log('Ошибка, оценка должна быть числом от 1 до 5');
-    //     }
-    // }
-
-    // addMark(mark, subjectName) {
-    //     this.marks[subjectName].push(mark)
-
-    // }
-
-
-
-
-
-
+    addMark(mark, subjectName) {
+        if (mark < 2 || mark > 5) return;
+        if (this.marks.hasOwnProperty(subjectName) !== true) {
+            this.marks[subjectName] = [];
+            console.log("Несуществующий предмет. Предмет создан.");
+        }
+        this.marks[subjectName].push(mark);
+    }
 
     getAverageBySubject(subjectName) {
         if(this.marks.hasOwnProperty(subjectName) === false || this.marks.length === 0) { 
             return 0;
         }
-        return this.marks[subjectName].reduce((average, mark, index, array) => average + mark / array.length)
+        return this.marks[subjectName].reduce((average, mark ) => average + mark) / this.marks[subjectName].length;
     }
 
     getAverage() {
-        if (Object.values(this.marks).length === 0) {
-            return 0;
+        const subjects = Object.keys(this.marks)
+        
+        if (subjects.length === 0) {
+            return 0
         }
+    
+        const sum = subjects.reduce((acc, subject) => acc + this.getAverageBySubject(subject), 0)
+        const average = sum / subjects.length
 
-        return Object.values(this.marks).reduce((accumulator, currentValue) => accumulator + currentValue / Object.values(this.marks).length, 0)
+        return average
     }
 
     exclude(reason) {
@@ -143,20 +122,3 @@ class Student {
         this.excluded = reason;
     }
 }
-const student = new Student("Олег Никифоров");
-
-// console.log(student);
-// student.addMark(5, "химия");
-// student.addMark(4, "химия");
-// student.addMark(3, "химия");
-// console.log(student);
-arr = 1;
-const test = {
-    name: []
-}
-test.name.push(arr)
-console.log(test);
-
-
-
-

@@ -37,25 +37,14 @@ function getTriangle(a, b, c){
     try {
         return new Triangle(a, b, c);
     }
-    catch (error) {
-        let err = {
+    catch(e){
+        return {
             get perimeter() {
-                return "Ошибка! Треугольник не существует";
+                return 'Ошибка! Треугольник не существует';
             },
             get area() {
-                return "Ошибка! Треугольник не существует";
+                return 'Ошибка! Треугольник не существует';
             }
         }
-        return err;
     }
-    //catch(e){
-    //     return {
-    //         getPerimeter() {
-    //             return 'Ошибка! Треугольник не существует';
-    //         },
-    //         getArea() {
-    //             return 'Ошибка! Треугольник не существует';
-    //         }
-    //     }
-    //}
 }
